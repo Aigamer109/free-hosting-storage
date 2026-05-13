@@ -1,0 +1,23 @@
+name: Deploy to Neocities
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/**' # Only trigger when files inside the public folder change
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy public folder to Neocities
+        uses: bcomnes/deploy-to-neocities@v1
+        with:
+          api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+          dist_dir: public
+          cleanup: false # Keeps existing user folders safe on Neocities
